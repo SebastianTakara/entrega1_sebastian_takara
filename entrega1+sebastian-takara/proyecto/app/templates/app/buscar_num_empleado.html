@@ -1,0 +1,37 @@
+{% extends "app/padre.html" %}
+
+{% load static %}
+
+{% block contenidoQueCambia %}
+
+    <h1>Buscar tu puesto</h1>
+    <br>
+    <br>    
+
+    <h3>Podes buscar un num_empleado:</h3>    
+    
+    <form action="/app/buscar/" method="GET">
+
+        <input type="text" name="buscar_num_empleado" id="num_empleado">
+        
+        <input type="submit" value="Buscar">
+
+    </form>
+
+    
+
+    {% if empleados %}
+
+    <p>Estamos buscando el: {{num_empleado}}</p>
+
+    <ul>
+	{% for empleado in empleados %}
+		<li> {{empleado.puesto}} </li>
+		<li> {{empelado.num_empleado}} </li>
+	{% endfor %}
+
+    </ul>
+   
+    {% endif %}
+
+{% endblock %}

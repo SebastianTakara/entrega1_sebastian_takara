@@ -1,4 +1,5 @@
 from ast import Return
+from urllib import request
 from django.http.request import QueryDict
 from django.shortcuts import render, HttpResponse
 from django.http import HttpResponse
@@ -7,17 +8,17 @@ from app.forms import Empleadoformulario, Usuarioformulario
 
 
 
-def usuario(recuest):
+def usuario(request):
     
-    return render(recuest, 'app/usuario.html')
+    return render(request, 'app/usuario.html')
 
-def producto(recuest):
+def producto(request):
 
-    return render(recuest, 'app/producto.html')
+    return render(request, 'app/producto.html')
 
-def empleado(recuest):
+def empleado(request):
 
-    return render(recuest, 'app/empleado.html')
+    return render(request, 'app/empleado.html')
 
 def usuarios(request):
 
@@ -70,18 +71,20 @@ def empleados(request):
 
 def buscar(request):
 
-    if  request.GET["puesto"]: 
+    if  request.GET["num_empleado"]: 
 
 	    
-        puesto = request.GET['puesto'] 
-        print(puesto)
-        empleados = Empleado.objects.filter(puesto__icontains=puesto)
-        print(empleados)
-        return render(request, "app/buscar.html", {"empleados":empleados, "puesto":puesto})
+            num_empleado = request.GET['num_empleado'] 
+            print(num_empleado)
+            empleados = Empleado.objects.filter(puesto__icontains=num_empleado)
+            print(empleados)
+            return render(request, "app/buscar_num_empleado.html", {"empleados":empleados, "num_empleado":num_empleado})
 
     else: 
         respuesta = "No enviaste datos"
-        return render(request,"app/buscar.html", {"respuesta":respuesta})
+    return render(request,"app/buscar_num_empleado.html", {"respuesta":respuesta})
 
+def buscar_num_empleado(request):
 
+    return render(request, 'app/buscar_num_empleado.html')
 
