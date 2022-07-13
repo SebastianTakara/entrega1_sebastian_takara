@@ -8,6 +8,7 @@ urlpatterns = [
     path('empleado', views.empleado, name="empleado"),
     path('Usuarioformulario', views.usuarios, name='Usuarioformulario'),
     path('Empleadoformulario', views.empleados, name='Empleadoformulario'),
+    path('Productoformulario',views.productos, name='Productoformulario'),
     path('buscar_num_empleado',views.buscar_num_empleado, name='buscar_num_empleado'),
     path('buscar/', views.buscar),
 

@@ -3,8 +3,8 @@ from urllib import request
 from django.http.request import QueryDict
 from django.shortcuts import render, HttpResponse
 from django.http import HttpResponse
-from app.models import Usuario, Empleado
-from app.forms import Empleadoformulario, Usuarioformulario
+from app.models import Usuario, Empleado, Producto
+from app.forms import Empleadoformulario, Usuarioformulario, Productoformulario
 
 
 
@@ -69,6 +69,29 @@ def empleados(request):
 
     return render(request, 'app/empleados.html',{'miformulario':miformulario})
 
+def productos(request):
+    if request.method == 'POST':
+
+        miformulario = Productoformulario(request.POST)
+        print(miformulario)
+
+        if miformulario.is_valid:
+
+            informacion = miformulario.cleaned_data
+            print(informacion)
+            
+            producto = Producto(producto=informacion['producto'],precio=informacion['precio'], vencimiento=informacion['vencimiento'])
+            
+            producto.save()
+
+            return render(request, 'app/producto.html')
+    else:
+            miformulario = Productoformulario()
+
+    return render (request, 'app/productos.html',{'miformulario':miformulario})
+    
+
+
 def buscar(request):
 
     if  request.GET["num_empleado"]: 
@@ -76,7 +99,7 @@ def buscar(request):
 	    
             num_empleado = request.GET['num_empleado'] 
             print(num_empleado)
-            empleados = Empleado.objects.filter(puesto__icontains=num_empleado)
+            empleados = Empleado.objects.filter(num_empleado__icontains=num_empleado)
             print(empleados)
             return render(request, "app/buscar_num_empleado.html", {"empleados":empleados, "num_empleado":num_empleado})
 
